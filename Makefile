@@ -1,9 +1,9 @@
 CC= g++
-CFLAGS= -g -O2 -shared -fPIC -I /usr/include/lua5.1/ -I/usr/local/include/mongo/
+CFLAGS= -g -O2 -shared -fPIC -I /usr/include/lua5.1/ -I/usr/local/include/mongo/ -I/usr/include/mongo
 AR= ar rcu
 RANLIB= ranlib
 RM= rm -f
-LIBS=-lmongoclient -lboost_thread -lboost_filesystem
+LIBS=-lmongoclient -L/usr/local/lib -lboost_thread -lboost_system -lboost_filesystem 
 OUTLIB=mongo.so
 
 LDFLAGS= $(LIBS)

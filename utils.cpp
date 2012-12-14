@@ -249,8 +249,15 @@ static void lua_append_bson(lua_State *L, const char *key, int stackpos, BSONObj
         if (numval == floor(numval)) {
             // The numeric value looks like an integer, treat it as such.
             // This is closer to how JSON datatypes behave.
+			if (numval <= UINT_MAX){
             int intval = lua_tointeger(L, stackpos);
             builder->append(key, static_cast<int32_t>(intval));
+			}else{
+				//try to see if the value is a 64 bit number then 
+				//use tonumber which can accamodate 64 bits.
+				long long longval = lua_tonumber(L, stackpos);
+				builder->append(key, static_cast<long long>(longval));
+			}
         } else {
             builder->append(key, numval);
         }
